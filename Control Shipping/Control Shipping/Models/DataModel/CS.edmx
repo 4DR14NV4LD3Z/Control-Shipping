@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Estacion_Partes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fk_Estacion" Type="int" Nullable="false" />
+          <Property Name="Fk_Parte" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Estatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Estaciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Fk_Proyecto" Type="int" Nullable="false" />
+          <Property Name="Estatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Partes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CMS" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Parte" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Fk_Proyecto" Type="int" Nullable="false" />
+          <Property Name="Cant_Pzas" Type="int" Nullable="false" />
+          <Property Name="Estatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Proyectos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Proyecto" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Estatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Seriales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Serial" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Proyecto" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Estacion" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Parte" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Turno" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Estatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_Estacion_Partes_tbl_Estaciones">
+          <End Role="tbl_Estaciones" Type="Self.tbl_Estaciones" Multiplicity="1" />
+          <End Role="tbl_Estacion_Partes" Type="Self.tbl_Estacion_Partes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Estaciones">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Estacion_Partes">
+              <PropertyRef Name="Fk_Estacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Estacion_Partes_tbl_Partes">
+          <End Role="tbl_Partes" Type="Self.tbl_Partes" Multiplicity="1" />
+          <End Role="tbl_Estacion_Partes" Type="Self.tbl_Estacion_Partes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Partes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Estacion_Partes">
+              <PropertyRef Name="Fk_Parte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Estaciones_tbl_Proyectos">
+          <End Role="tbl_Proyectos" Type="Self.tbl_Proyectos" Multiplicity="1" />
+          <End Role="tbl_Estaciones" Type="Self.tbl_Estaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Proyectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Estaciones">
+              <PropertyRef Name="Fk_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Partes_tbl_Proyectos">
+          <End Role="tbl_Proyectos" Type="Self.tbl_Proyectos" Multiplicity="1" />
+          <End Role="tbl_Partes" Type="Self.tbl_Partes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Proyectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Partes">
+              <PropertyRef Name="Fk_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GetPallet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Estacion" Type="varchar" Mode="In" />
+          <Parameter Name="Parte" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Inserta_DMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Estacion" Type="varchar" Mode="In" />
+          <Parameter Name="dmc" Type="varchar" Mode="In" />
+          <Parameter Name="Parte" Type="varchar" Mode="In" />
+          <Parameter Name="Juliano" Type="varchar" Mode="In" />
+          <Parameter Name="Turno" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_Partes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Estacion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Partes_Activas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Estacion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Serial_Historial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Estacion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateParte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Estatus" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_Valida_DMC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Estacion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Valida_DMC_Honda" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DMC" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CSModelStoreContainer">
+          <EntitySet Name="tbl_Estacion_Partes" EntityType="Self.tbl_Estacion_Partes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Estaciones" EntityType="Self.tbl_Estaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Partes" EntityType="Self.tbl_Partes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Proyectos" EntityType="Self.tbl_Proyectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Seriales" EntityType="Self.tbl_Seriales" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_Estacion_Partes_tbl_Estaciones" Association="Self.FK_tbl_Estacion_Partes_tbl_Estaciones">
+            <End Role="tbl_Estaciones" EntitySet="tbl_Estaciones" />
+            <End Role="tbl_Estacion_Partes" EntitySet="tbl_Estacion_Partes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Estacion_Partes_tbl_Partes" Association="Self.FK_tbl_Estacion_Partes_tbl_Partes">
+            <End Role="tbl_Partes" EntitySet="tbl_Partes" />
+            <End Role="tbl_Estacion_Partes" EntitySet="tbl_Estacion_Partes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Estaciones_tbl_Proyectos" Association="Self.FK_tbl_Estaciones_tbl_Proyectos">
+            <End Role="tbl_Proyectos" EntitySet="tbl_Proyectos" />
+            <End Role="tbl_Estaciones" EntitySet="tbl_Estaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Partes_tbl_Proyectos" Association="Self.FK_tbl_Partes_tbl_Proyectos">
+            <End Role="tbl_Proyectos" EntitySet="tbl_Proyectos" />
+            <End Role="tbl_Partes" EntitySet="tbl_Partes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Estacion_Partes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fk_Estacion" Type="Int32" Nullable="false" />
+          <Property Name="Fk_Parte" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbl_Estaciones" Relationship="Self.FK_tbl_Estacion_Partes_tbl_Estaciones" FromRole="tbl_Estacion_Partes" ToRole="tbl_Estaciones" />
+          <NavigationProperty Name="tbl_Partes" Relationship="Self.FK_tbl_Estacion_Partes_tbl_Partes" FromRole="tbl_Estacion_Partes" ToRole="tbl_Partes" />
+        </EntityType>
+        <EntityType Name="tbl_Estaciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fk_Proyecto" Type="Int32" Nullable="false" />
+          <Property Name="Estatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbl_Estacion_Partes" Relationship="Self.FK_tbl_Estacion_Partes_tbl_Estaciones" FromRole="tbl_Estaciones" ToRole="tbl_Estacion_Partes" />
+          <NavigationProperty Name="tbl_Proyectos" Relationship="Self.FK_tbl_Estaciones_tbl_Proyectos" FromRole="tbl_Estaciones" ToRole="tbl_Proyectos" />
+        </EntityType>
+        <EntityType Name="tbl_Partes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CMS" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Parte" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fk_Proyecto" Type="Int32" Nullable="false" />
+          <Property Name="Cant_Pzas" Type="Int32" Nullable="false" />
+          <Property Name="Estatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbl_Estacion_Partes" Relationship="Self.FK_tbl_Estacion_Partes_tbl_Partes" FromRole="tbl_Partes" ToRole="tbl_Estacion_Partes" />
+          <NavigationProperty Name="tbl_Proyectos" Relationship="Self.FK_tbl_Partes_tbl_Proyectos" FromRole="tbl_Partes" ToRole="tbl_Proyectos" />
+        </EntityType>
+        <EntityType Name="tbl_Proyectos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Proyecto" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Estatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbl_Estaciones" Relationship="Self.FK_tbl_Estaciones_tbl_Proyectos" FromRole="tbl_Proyectos" ToRole="tbl_Estaciones" />
+          <NavigationProperty Name="tbl_Partes" Relationship="Self.FK_tbl_Partes_tbl_Proyectos" FromRole="tbl_Proyectos" ToRole="tbl_Partes" />
+        </EntityType>
+        <EntityType Name="tbl_Seriales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Serial" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Proyecto" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estacion" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Parte" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Turno" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estatus" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_Estacion_Partes_tbl_Estaciones">
+          <End Role="tbl_Estaciones" Type="Self.tbl_Estaciones" Multiplicity="1" />
+          <End Role="tbl_Estacion_Partes" Type="Self.tbl_Estacion_Partes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Estaciones">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Estacion_Partes">
+              <PropertyRef Name="Fk_Estacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Estacion_Partes_tbl_Partes">
+          <End Role="tbl_Partes" Type="Self.tbl_Partes" Multiplicity="1" />
+          <End Role="tbl_Estacion_Partes" Type="Self.tbl_Estacion_Partes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Partes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Estacion_Partes">
+              <PropertyRef Name="Fk_Parte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Estaciones_tbl_Proyectos">
+          <End Role="tbl_Proyectos" Type="Self.tbl_Proyectos" Multiplicity="1" />
+          <End Role="tbl_Estaciones" Type="Self.tbl_Estaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Proyectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Estaciones">
+              <PropertyRef Name="Fk_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Partes_tbl_Proyectos">
+          <End Role="tbl_Proyectos" Type="Self.tbl_Proyectos" Multiplicity="1" />
+          <End Role="tbl_Partes" Type="Self.tbl_Partes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Proyectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_Partes">
+              <PropertyRef Name="Fk_Proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Estacion_Partes" EntityType="Self.tbl_Estacion_Partes" />
+          <EntitySet Name="tbl_Estaciones" EntityType="Self.tbl_Estaciones" />
+          <EntitySet Name="tbl_Partes" EntityType="Self.tbl_Partes" />
+          <EntitySet Name="tbl_Proyectos" EntityType="Self.tbl_Proyectos" />
+          <EntitySet Name="tbl_Seriales" EntityType="Self.tbl_Seriales" />
+          <AssociationSet Name="FK_tbl_Estacion_Partes_tbl_Estaciones" Association="Self.FK_tbl_Estacion_Partes_tbl_Estaciones">
+            <End Role="tbl_Estaciones" EntitySet="tbl_Estaciones" />
+            <End Role="tbl_Estacion_Partes" EntitySet="tbl_Estacion_Partes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Estacion_Partes_tbl_Partes" Association="Self.FK_tbl_Estacion_Partes_tbl_Partes">
+            <End Role="tbl_Partes" EntitySet="tbl_Partes" />
+            <End Role="tbl_Estacion_Partes" EntitySet="tbl_Estacion_Partes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Estaciones_tbl_Proyectos" Association="Self.FK_tbl_Estaciones_tbl_Proyectos">
+            <End Role="tbl_Proyectos" EntitySet="tbl_Proyectos" />
+            <End Role="tbl_Estaciones" EntitySet="tbl_Estaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Partes_tbl_Proyectos" Association="Self.FK_tbl_Partes_tbl_Proyectos">
+            <End Role="tbl_Proyectos" EntitySet="tbl_Proyectos" />
+            <End Role="tbl_Partes" EntitySet="tbl_Partes" />
+          </AssociationSet>
+          <FunctionImport Name="sp_Partes" ReturnType="Collection(CSModel.sp_Partes_Result)">
+          <Parameter Name="Estacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Partes_Activas" ReturnType="Collection(CSModel.sp_Partes_Activas_Result)">
+          <Parameter Name="Estacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Serial_Historial" ReturnType="Collection(CSModel.sp_Serial_Historial_Result)">
+          <Parameter Name="Estacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Valida_DMC" ReturnType="Collection(CSModel.sp_Valida_DMC_Result)">
+          <Parameter Name="Estacion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Valida_DMC_Honda" ReturnType="Collection(String)">
+          <Parameter Name="DMC" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Inserta_DMC" ReturnType="Collection(CSModel.sp_Inserta_DMC_Result)">
+            <Parameter Name="Estacion" Mode="In" Type="String" />
+            <Parameter Name="dmc" Mode="In" Type="String" />
+            <Parameter Name="Parte" Mode="In" Type="String" />
+            <Parameter Name="Juliano" Mode="In" Type="String" />
+            <Parameter Name="Turno" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetPallet" ReturnType="Collection(CSModel.sp_GetPallet_Result)">
+            <Parameter Name="Estacion" Mode="In" Type="String" />
+            <Parameter Name="Parte" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateParte">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Estatus" Mode="In" Type="Boolean" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_Partes_Result">
+          <Property Type="String" Name="Proyecto" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="CMS" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Parte" Nullable="true" MaxLength="40" />
+          <Property Type="Boolean" Name="Estatus" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Partes_Activas_Result">
+          <Property Type="String" Name="Proyecto" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="CMS" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Parte" Nullable="true" MaxLength="40" />
+          <Property Type="Boolean" Name="Estatus" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Serial_Historial_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Serial" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Proyecto" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Estacion" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Parte" Nullable="false" MaxLength="40" />
+          <Property Type="Int32" Name="Turno" Nullable="false" />
+          <Property Type="DateTime" Name="Fecha" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="Estatus" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_Valida_DMC_Result">
+          <Property Type="String" Name="Proyecto" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="CMS" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Parte" Nullable="true" MaxLength="40" />
+          <Property Type="Boolean" Name="Estatus" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_Inserta_DMC_Result">
+          <Property Type="String" Name="Mensaje" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="Tipo" Nullable="true" />
+          <Property Type="Int32" Name="Faltante" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetPallet_Result" >
+          <Property Type="String" Name="DMC" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CSModelStoreContainer" CdmEntityContainer="CSEntities">
+          <EntitySetMapping Name="tbl_Estacion_Partes">
+            <EntityTypeMapping TypeName="CSModel.tbl_Estacion_Partes">
+              <MappingFragment StoreEntitySet="tbl_Estacion_Partes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fk_Estacion" ColumnName="Fk_Estacion" />
+                <ScalarProperty Name="Fk_Parte" ColumnName="Fk_Parte" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Estaciones">
+            <EntityTypeMapping TypeName="CSModel.tbl_Estaciones">
+              <MappingFragment StoreEntitySet="tbl_Estaciones">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Fk_Proyecto" ColumnName="Fk_Proyecto" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Partes">
+            <EntityTypeMapping TypeName="CSModel.tbl_Partes">
+              <MappingFragment StoreEntitySet="tbl_Partes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CMS" ColumnName="CMS" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Fk_Proyecto" ColumnName="Fk_Proyecto" />
+                <ScalarProperty Name="Cant_Pzas" ColumnName="Cant_Pzas" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Proyectos">
+            <EntityTypeMapping TypeName="CSModel.tbl_Proyectos">
+              <MappingFragment StoreEntitySet="tbl_Proyectos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Seriales">
+            <EntityTypeMapping TypeName="CSModel.tbl_Seriales">
+              <MappingFragment StoreEntitySet="tbl_Seriales">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="Estacion" ColumnName="Estacion" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Turno" ColumnName="Turno" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_Partes" FunctionName="CSModel.Store.sp_Partes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CSModel.sp_Partes_Result">
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="CMS" ColumnName="CMS" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Partes_Activas" FunctionName="CSModel.Store.sp_Partes_Activas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CSModel.sp_Partes_Activas_Result">
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="CMS" ColumnName="CMS" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Serial_Historial" FunctionName="CSModel.Store.sp_Serial_Historial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CSModel.sp_Serial_Historial_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="Estacion" ColumnName="Estacion" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Turno" ColumnName="Turno" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Valida_DMC" FunctionName="CSModel.Store.sp_Valida_DMC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CSModel.sp_Valida_DMC_Result">
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="CMS" ColumnName="CMS" />
+                <ScalarProperty Name="Parte" ColumnName="Parte" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Valida_DMC_Honda" FunctionName="CSModel.Store.sp_Valida_DMC_Honda" />
+          <FunctionImportMapping FunctionImportName="sp_Inserta_DMC" FunctionName="CSModel.Store.sp_Inserta_DMC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CSModel.sp_Inserta_DMC_Result">
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Faltante" ColumnName="Faltante" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetPallet" FunctionName="CSModel.Store.sp_GetPallet" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CSModel.sp_GetPallet_Result">
+                <ScalarProperty Name="DMC" ColumnName="DMC" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateParte" FunctionName="CSModel.Store.sp_UpdateParte" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

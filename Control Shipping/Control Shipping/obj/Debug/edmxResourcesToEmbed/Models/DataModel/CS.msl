@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CSModelStoreContainer" CdmEntityContainer="CSEntities">
+    <EntitySetMapping Name="tbl_Estacion_Partes">
+      <EntityTypeMapping TypeName="CSModel.tbl_Estacion_Partes">
+        <MappingFragment StoreEntitySet="tbl_Estacion_Partes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Fk_Estacion" ColumnName="Fk_Estacion" />
+          <ScalarProperty Name="Fk_Parte" ColumnName="Fk_Parte" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Estaciones">
+      <EntityTypeMapping TypeName="CSModel.tbl_Estaciones">
+        <MappingFragment StoreEntitySet="tbl_Estaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Fk_Proyecto" ColumnName="Fk_Proyecto" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Partes">
+      <EntityTypeMapping TypeName="CSModel.tbl_Partes">
+        <MappingFragment StoreEntitySet="tbl_Partes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CMS" ColumnName="CMS" />
+          <ScalarProperty Name="Parte" ColumnName="Parte" />
+          <ScalarProperty Name="Fk_Proyecto" ColumnName="Fk_Proyecto" />
+          <ScalarProperty Name="Cant_Pzas" ColumnName="Cant_Pzas" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Proyectos">
+      <EntityTypeMapping TypeName="CSModel.tbl_Proyectos">
+        <MappingFragment StoreEntitySet="tbl_Proyectos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Seriales">
+      <EntityTypeMapping TypeName="CSModel.tbl_Seriales">
+        <MappingFragment StoreEntitySet="tbl_Seriales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Serial" ColumnName="Serial" />
+          <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+          <ScalarProperty Name="Estacion" ColumnName="Estacion" />
+          <ScalarProperty Name="Parte" ColumnName="Parte" />
+          <ScalarProperty Name="Turno" ColumnName="Turno" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_Partes" FunctionName="CSModel.Store.sp_Partes">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSModel.sp_Partes_Result">
+          <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+          <ScalarProperty Name="CMS" ColumnName="CMS" />
+          <ScalarProperty Name="Parte" ColumnName="Parte" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_Partes_Activas" FunctionName="CSModel.Store.sp_Partes_Activas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSModel.sp_Partes_Activas_Result">
+          <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+          <ScalarProperty Name="CMS" ColumnName="CMS" />
+          <ScalarProperty Name="Parte" ColumnName="Parte" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_Serial_Historial" FunctionName="CSModel.Store.sp_Serial_Historial">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSModel.sp_Serial_Historial_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Serial" ColumnName="Serial" />
+          <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+          <ScalarProperty Name="Estacion" ColumnName="Estacion" />
+          <ScalarProperty Name="Parte" ColumnName="Parte" />
+          <ScalarProperty Name="Turno" ColumnName="Turno" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_Valida_DMC" FunctionName="CSModel.Store.sp_Valida_DMC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSModel.sp_Valida_DMC_Result">
+          <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+          <ScalarProperty Name="CMS" ColumnName="CMS" />
+          <ScalarProperty Name="Parte" ColumnName="Parte" />
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_Valida_DMC_Honda" FunctionName="CSModel.Store.sp_Valida_DMC_Honda" />
+    <FunctionImportMapping FunctionImportName="sp_Inserta_DMC" FunctionName="CSModel.Store.sp_Inserta_DMC">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSModel.sp_Inserta_DMC_Result">
+          <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Faltante" ColumnName="Faltante" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetPallet" FunctionName="CSModel.Store.sp_GetPallet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CSModel.sp_GetPallet_Result">
+          <ScalarProperty Name="DMC" ColumnName="DMC" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UpdateParte" FunctionName="CSModel.Store.sp_UpdateParte" />
+  </EntityContainerMapping>
+</Mapping>

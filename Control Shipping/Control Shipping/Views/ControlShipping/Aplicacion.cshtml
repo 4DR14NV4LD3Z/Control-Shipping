@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Control Shipping";
+    Layout = "~/Views/ControlShipping/Head.cshtml";
+    <script src="~/Scripts/Views/ControlShipping.js"></script>
+}
+<div class="card-group">
+    <div class="card col-lg-12 text-center txt-C-yellow bg-primary">
+        <label id="_ViewDMC" class="fa-3x">50200-3W0-A00022046005220021052</label>
+    </div>
+</div>
+<div class="card-group" style="height:570px; overflow-y:hidden; overflow-x:hidden">
+    <div class="card  col-lg-4" style="">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">DMC</th>
+                </tr>
+            </thead>
+            <tbody> 
+            </tbody>
+        </table>
+    </div>
+    <div class="card  col-lg-3">
+        <div class="">
+            <input id="EnterDMC" type="text" placeholder="Ingresa el DMC" class="form-control" />
+        </div>
+        <div class="text-center">
+            <label class="text-center fa-2x m-3">Ultima etiqueta</label>
+            <div class="card bg-primary">
+                <label class="txt-C-yellow  fa-3x text-center">1148180</label>
+            </div>
+            <div class="m-3">
+                <button class="btn btn-outline-dark btn-block btn-lg" data-toggle="modal" data-target="#staticBackdrop"> Etiqueta CS <i class="fa fa-barcode" aria-hidden="true"></i></button>
+            </div>
+            <div class="m-3">
+                <button class="btn btn-outline-dark btn-block btn-lg">Configurar numeros de parte <i class="fa fa-cogs" aria-hidden="true"></i></button>
+            </div>
+        </div>
+
+        <div class="card-footer bg-primary text-white">
+            <label class="">12 Pzas</label>
+            <button class="btn btn-primary">Imprimir Etiqueta <i class="fa fa-print" aria-hidden="true"></i></button> 
+            <label id="idestacion"></label>
+
+        </div>
+    </div>
+    <div class="card  col-lg-5">
+        <div class="card-header bg-warning text-white">
+            <label class="fa-2x form-control text-center bg-warning ">- - -</label>
+        </div>
+        <div class="card-body">
+            <div id="btnparts" class="row"> 
+            </div>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="row">
+        <label class="col-1 text-right font-weight-bolder">Mensaje:</label>
+        <label class="col-11 text-left text-danger font-weight-bolder">Texto alternativo / Mensajes de aplicacion / Errores en datos</label>
+    </div>
+</div>
+
+
+<div class="modal  fade" id="ModalConfig" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="staticBackdropLabel">¿Que estacion es esta?</h5> 
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-9 row">
+                        <div class="col-4">
+                            <label for="formFile" class="form-label font-weight-bold">Proyecto:</label>
+                            <select id="SelProject" class="custom-select custom-select mb-3" aria-label="Default select example"> 
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <label class="form-label font-weight-bold">Estacion:</label>
+                            <select id="SelStation" class="custom-select custom-select mb-3" aria-label="Default select example">
+                            </select>
+                        </div>
+                        <div class="col-12 text-center">
+                            <hr />
+                            <label class="form-label font-weight-bold">Seleccionar numeros de parte a activar</label>
+                            <div id="_Parts" class="row"> 
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-3 fa-2x text-center"> 
+                        <label class="form-label fa-2x text-center text-primary">
+                            <i class="fa fa-television fa-3x" aria-hidden="true"></i>
+                        </label> 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+                <button type="button" onclick="SettingStation()" class="btn btn-outline-dark">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Historial de etiquetas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
